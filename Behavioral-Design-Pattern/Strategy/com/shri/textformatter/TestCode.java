@@ -9,13 +9,16 @@ import java.util.List;
 public class TestCode {
 
     public static void main(String ...args) {
-        TextProcessor tp = new TextProcessor(OutputFormatter.MARKDOWN);
-        tp.appendList(List.of("Nothing", " is ", " real ", " in ", " to ", "world"));
-        System.out.println(tp);
+        System.out.println("\n----------------------------------------------\n" +
+                            "|\tUsing Static Strategy" +
+                            "\n----------------------------------------------\n");
 
-        tp.clear();
-        tp.setOutputFormat(OutputFormatter.HTML);
-        tp.appendList(List.of("Santa ", "Banta", "Fanta"));
-        System.out.println(tp);
+        TextProcessor<MarkdownListStrategy> markdownTp = new TextProcessor<>(MarkdownListStrategy::new);
+        markdownTp.appendList(List.of("Nothing", " is ", " real ", " in ", " to ", "world"));
+        System.out.println(markdownTp);
+
+        TextProcessor<HtmlListStrategy> htmlTp = new TextProcessor<>(HtmlListStrategy::new);
+        htmlTp.appendList(List.of("Santa ", "Banta", "Fanta"));
+        System.out.println(htmlTp);
     }
 }

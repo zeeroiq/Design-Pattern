@@ -1,30 +1,21 @@
 package com.shri.textformatter;
 
 import java.util.List;
+import java.util.function.Supplier;
 
 /**
  * @Author: ZeeroIQ
  * @Date: 5/8/2020 4:04 AM
  */
-public class TextProcessor {
+public class TextProcessor<T extends ListStrategy> {
 
     private StringBuilder sb = new StringBuilder();
-    private ListStrategy listStrategy;
+    private T listStrategy;
 
-    TextProcessor(OutputFormatter formatter) {
-        setOutputFormat(formatter);
+    TextProcessor(Supplier<? extends T> reference) {
+        listStrategy = reference.get();
     }
 
-    public void setOutputFormat(OutputFormatter formatter) {
-        switch (formatter) {
-            case MARKDOWN:
-                this.listStrategy = new MarkdownListStrategy();
-                break;
-            case HTML:
-                this.listStrategy = new HtmlListStrategy();
-                break;
-        }
-    }
 
     public void appendList(List<String> items) {
         listStrategy.start(sb);
